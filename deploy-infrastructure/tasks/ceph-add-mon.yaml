@@ -1,0 +1,38 @@
+---
+- name: Add MON hosts to Ceph Orchestrator
+  delegate_to: "ceph1"
+  command: ceph orch host add {{ item }}
+  loop: "{{ mon_hosts }}"
+  tags:
+    - adding_mon
+  when: inventory_hostname == groups['ceph'][0]  # This task runs only on the first node
+
+- name: Apply mon --unmanaged
+  delegate_to: "ceph1"
+  command: ceph orch apply mon --unmanaged
+  tags:
+    - adding_mon
+  when: inventory_hostname == groups['ceph'][0]  # This task runs only on the first node
+
+- name: Add Lable for the Mon
+  delegate_to: "{{mon1}}"
+  command: ceph orch host label add  {{ item }} mon
+  loop: "{{ mon_hosts }}"
+  tags:
+    - adding_mon
+  when: inventory_hostname == groups['ceph'][0]  # This task runs only on the first node
+
+- name: Apply MON role to hosts
+  delegate_to: "{{mon1}}"
+  shell: ceph orch apply mon 3
+  tags:
+    - adding_mon
+  when: inventory_hostname == groups['ceph'][0]  # This task runs only on the first node
+
+- name: Apply MON role to hosts
+  delegate_to: "{{mon1}}"
+  shell: ceph orch apply mon {{ item }}
+  loop: "{{ mon_hosts }}"
+  tags:
+    - adding_mon
+  when: inventory_hostname == groups['ceph'][0]  # This task runs only on the first node

@@ -1,0 +1,7 @@
+---
+- hosts: "{{ machine }}"
+  gather_facts: yes
+  tasks:
+    - name: running deploy role
+      import_role:
+        name: deploy-infrastructure

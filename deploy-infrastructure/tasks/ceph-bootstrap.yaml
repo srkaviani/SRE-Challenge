@@ -1,0 +1,46 @@
+---
+- name: Check if ceph.conf already exists
+  delegate_to: "{{mon1}}"
+  stat:
+    path: /root/ceph.conf
+  register: ceph_conf_stat
+  changed_when: false
+  tags:
+    - bootstrap
+  when: inventory_hostname == groups['ceph'][0]  # This task runs only on the first node
+
+
+#- name: Create ceph.conf
+#  delegate_to: "{{mon1}}"
+#  blockinfile:
+#    path: /root/ceph.conf
+#    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+#    block: |
+#      [global]
+#      public network = {{ public_network }}
+#      cluster network = {{ cluster_network }}
+#  when: not ceph_conf_stat.stat.exists or bootstrap_manager | default(false)
+#  tags:
+#    - bootstrap
+
+- name: Run Ceph bootstrap
+  delegate_to: "ceph1"
+  shell: cephadm bootstrap --mon-ip "{{ mon_ip }}"
+  when: bootstrap_manager | default(false)
+  tags:
+    - bootstrap
+  when: inventory_hostname == groups['ceph'][0]  # This task runs only on the first node
+
+#- name: Add SSH public key for user
+#  delegate_to: "ceph1"
+#  authorized_key:
+#    user: root  # Replace with the remote username you want to set up SSH key for
+#    state: present
+#    key: "{{ lookup('file', '/etc/ceph/ceph.pub') }}"
+
+
+- name: Copy ceph.pub to remote host
+  delegate_to: "ceph1"
+  command: ssh-copy-id -f -i /etc/ceph/ceph.pub root@{{ inventory_hostname }}
+  tags:
+    - bootstrap

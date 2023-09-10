@@ -1,0 +1,17 @@
+# tasks file for deploy-infrastructure
+---
+
+- name: Ceph PreInstall
+  include: ceph-preinstall.yaml
+
+- name: Ceph BootStrap
+  include: ceph-bootstrap.yaml
+
+- name: Ceph Add Mons
+  include: ceph-add-mon.yaml
+
+- name: Ceph Add Mgrs
+  include: ceph-add-mgr.yaml
+
+- name: Ceph Add OSDs
+  include: ceph-add-osd.yaml
