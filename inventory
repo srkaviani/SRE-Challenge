@@ -3,3 +3,7 @@ ceph1
 ceph2
 ceph3
 
+[webserver]
+webserver1
+webserver2
+webserver3

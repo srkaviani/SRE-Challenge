@@ -1,0 +1,6 @@
+---
+- name: Create Ceph fs volume
+  delegate_to: "{{ mon1 }}"
+  command: ceph fs volume create sre
+  tags:
+    - adding_osd

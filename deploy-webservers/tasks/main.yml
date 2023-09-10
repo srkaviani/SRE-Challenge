@@ -1,0 +1,5 @@
+# tasks file for deploy-webservers
+---
+
+- name: Ceph mount in webservers
+  include: mount-storage.yaml

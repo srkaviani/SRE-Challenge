@@ -1,7 +1,14 @@
 ---
-- hosts: "{{ machine }}"
+- hosts: "ceph"
   gather_facts: yes
   tasks:
     - name: running deploy role
       import_role:
         name: deploy-infrastructure
+
+- hosts: "webserver"
+  gather_facts: yes
+  tasks:
+    - name: running webserver role
+      import_role:
+        name: deploy-webservers

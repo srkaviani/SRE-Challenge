@@ -15,3 +15,7 @@
 
 - name: Ceph Add OSDs
   include: ceph-add-osd.yaml
+
+
+- name: Ceph Create FS
+  include: ceph-fs-init.yaml
