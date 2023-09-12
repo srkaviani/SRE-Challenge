@@ -1,0 +1,28 @@
+frontend webserver-frontend
+  bind *:80
+  mode tcp
+  option tcplog
+  default_backend webserver-backend
+
+backend webserver-backend
+  option httpchk GET /
+#  http-check expect status 200
+  mode tcp
+  balance roundrobin
+    server webserver1 {{ webserver1 }}:80 check fall 3 rise 2
+    server webserver2 {{ webserver2 }}:80 check fall 3 rise 2
+    server webserver3 {{ webserver3 }}:80 check fall 3 rise 2
+
+
+frontend galera-frontend
+  bind *:3306
+  mode tcp
+  option tcplog
+  default_backend galera-backend
+
+backend galera-backend
+  mode tcp
+  balance roundrobin
+    server webserver1 {{ webserver1 }}:3306 check fall 3 rise 2
+    server webserver2 {{ webserver2 }}:3306 check fall 3 rise 2
+    server webserver3 {{ webserver3 }}:3306 check fall 3 rise 2

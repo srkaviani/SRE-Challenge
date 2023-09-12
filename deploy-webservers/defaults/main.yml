@@ -1,2 +1,8 @@
 ---
 # defaults file for deploy-webservers
+php_version: "php7.4"  # Customize the PHP version as needed
+wordpress_db_name: wordpress_db
+wordpress_db_user: wordpress_user
+wordpress_db_password: MySecertP@ssw0rd
+wordpress_db_host: webserver1
+wordpress_db_prefix: wp_

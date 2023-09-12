@@ -1,0 +1,29 @@
+---
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  tags: loadbalancer
+
+- name: Install haproxy
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - haproxy
+  tags: loadbalancer
+
+- name: Configure haproxy
+  template:
+    src:  haproxy.cfg.j2 # Replace with the path to your template file
+    dest: /etc/haproxy/haproxy.cfg
+    mode: '644'
+  tags: loadbalancer
+
+
+- name: Enable and restart haproxy service
+  service:
+    name: haproxy
+    state: restarted
+    enabled: yes
+  tags: loadbalancer

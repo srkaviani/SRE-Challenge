@@ -3,3 +3,6 @@
 
 - name: Ceph mount in webservers
   include: mount-storage.yaml
+
+- name: Install wp and requirements in webservers
+  include: install-wp.yaml

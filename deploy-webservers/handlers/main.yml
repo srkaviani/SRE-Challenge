@@ -1,2 +1,8 @@
 ---
 # handlers file for deploy-webservers
+- name: Set WordPress permissions
+  command: chown -R www-data:www-data /var/www/html
+- name: Reload Nginx
+  service:
+    name: nginx
+    state: reloaded

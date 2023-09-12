@@ -17,18 +17,18 @@
 - name: Add entry to /etc/fstab for Ceph
   lineinfile:
     path: /etc/fstab
-    line: "ceph1,ceph2,ceph3:6789:/ /mnt ceph name=admin,secretfile=/root/admin.secret 0 0"
+    line: "ceph1,ceph2,ceph3:6789:/ /var/www/html ceph name=admin,secretfile=/root/admin.secret 0 0"
   tags:
     - configure_fstab
 - name: Create mount point directory
   file:
-    path: /mnt
+    path: /var/www/html
     state: directory
   tags:
     - configure_fstab
 - name: Mount Ceph filesystem
   mount:
-    path: /mnt
+    path: /var/www/html
     src: ceph1,ceph2,ceph3:6789:/
     fstype: ceph
     opts: "name=admin,secretfile=/root/admin.secret"

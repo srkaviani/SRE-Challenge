@@ -7,3 +7,11 @@ ceph3
 webserver1
 webserver2
 webserver3
+
+[galera-cluster-nodes]
+webserver1
+webserver2
+webserver3
+
+[loadbalancer]
+loadbalancer
