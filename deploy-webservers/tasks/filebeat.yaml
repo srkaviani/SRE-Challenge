@@ -1,0 +1,24 @@
+- name: Create a temporary directory
+  ansible.builtin.file:
+    path: /tmp/filebeat_install
+    state: directory
+- name: Download Filebeat deb package
+  ansible.builtin.get_url:
+    url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-7.16.2-amd64.deb
+    dest: /tmp/filebeat_install/filebeat-7.16.2-amd64.deb
+- name: Install Filebeat
+  ansible.builtin.apt:
+    deb: /tmp/filebeat_install/filebeat-7.16.2-amd64.deb
+    state: present
+
+- name: Configure filebeat
+  template:
+    src:  filebeat.yml.j2 # Replace with the path to your template file
+    dest: /etc/filebeat/filebeat.yml
+    mode: '644'
+
+- name: Start and enable Filebeat service
+  ansible.builtin.service:
+    name: filebeat
+    state: restarted
+    enabled: yes

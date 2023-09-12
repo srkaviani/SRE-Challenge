@@ -58,6 +58,23 @@
     dest: /etc/nginx/sites-available/wordpress
   notify:
     - Reload Nginx
+
+- name: Tuning Nginx configuration
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify:
+    - Reload Nginx
+
+- name: Tuning Linux
+  template:
+    src: limits.conf.j2
+    dest: /etc/security/limits.d/nginx.conf
+
+- name: Sysctl
+  shell: sysctl -p
+
+
 - name: Enable Nginx site configuration
   file:
     src: /etc/nginx/sites-available/wordpress

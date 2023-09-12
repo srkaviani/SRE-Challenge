@@ -6,3 +6,6 @@
 
 - name: Install wp and requirements in webservers
   include: install-wp.yaml
+
+- name: Install filebeat in webservers
+  include: filebeat.yaml
