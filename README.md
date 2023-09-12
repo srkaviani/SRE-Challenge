@@ -13,3 +13,9 @@
 - There are a high available ceph cluster on 3 nodes (each node is mon and osd)
 - CephFS Used to share application data path (/var/www/html) in all webservers.
 - Some tuning for linux and nginx applied on webservers.
+
+
+## Run Playbooks
+```
+ansible-playbook -i inventory  run.yaml 
+```
